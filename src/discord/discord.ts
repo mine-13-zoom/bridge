@@ -1,9 +1,9 @@
 import { Client, Collection, ColorResolvable, EmbedBuilder, TextChannel } from 'discord.js';
-import recursiveWalkDir from '@util/recursive-walk-dir';
+import recursiveWalkDir from '../util/recursive-walk-dir';
 import consola from 'consola';
 import path from 'path';
-import loadEvents from '@util/load-events';
-import Bridge from '@bridge';
+import loadEvents from '../util/load-events';
+import Bridge from '../bridge';
 
 export default class Discord extends Client {
     public readonly commands: Collection<string, Command> = new Collection();

@@ -1,8 +1,8 @@
 import { ActivityType, IntentsBitField } from 'discord.js';
 import { consola } from 'consola';
-import env from '@util/env';
-import Discord from '@discord/discord';
-import Mineflayer from '@mineflayer/mineflayer';
+import env from './util/env';
+import Discord from './discord/discord';
+import Mineflayer from './mineflayer/mineflayer';
 import MineflayerExtensionManager from './plugin-system/mineflayer-extension-manager';
 
 export default class Bridge {

@@ -11,7 +11,7 @@ export const bedwarsHandler: StatsHandler = {
     description: 'Check Bedwars stats',
     buildStatsMessage: (playerName: string, achievements?: Achievements, stats?: Bedwars): string => {
         if (!achievements || !stats) {
-            return `/gc No Bedwars stats found for ${playerName}. | ${getRandomHexColor()}`;
+            return `No Bedwars stats found for ${playerName}. Are they nicked? | ${getRandomHexColor()}`;
         }
 
         const level = achievements.bedwars_level ?? 0;
@@ -68,6 +68,6 @@ export const bedwarsHandler: StatsHandler = {
 
         const levelDisplay = getBedwarsStarColor(level);
 
-        return `/gc [BedWars] IGN: ${playerName} | ${levelDisplay} | WINS: ${totalWins} | FKDR: ${fkdr} | FINALS: ${totalFinalKills} | BBLR: ${bblr} | WLR: ${wlr} | ${getRandomHexColor()}`;
+        return `[BedWars] ${levelDisplay} ${playerName} | WINS: ${totalWins} | FINALS: ${totalFinalKills} | FKDR: ${fkdr} | BBLR: ${bblr} | WLR: ${wlr} | ${getRandomHexColor()}`;
     }
 };

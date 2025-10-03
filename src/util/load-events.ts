@@ -2,8 +2,8 @@ import { Bot } from 'mineflayer';
 import EventEmitter from 'events';
 import path from 'path';
 import consola from 'consola';
-import regex from '@mineflayer/events/regex';
-import recursiveWalkDir from '@util/recursive-walk-dir';
+import regex from '../mineflayer/events/regex';
+import recursiveWalkDir from './recursive-walk-dir';
 import Bridge from '../bridge';
 
 const isObjKey = <T extends object>(key: any, obj: T): key is keyof T => key in obj;

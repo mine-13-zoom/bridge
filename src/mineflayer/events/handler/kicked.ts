@@ -1,5 +1,5 @@
 import consola from 'consola';
-import emojis from '@util/emojis';
+import emojis from '../../../util/emojis';
 
 export default {
     name: 'kicked',

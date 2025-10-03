@@ -1,4 +1,4 @@
-import emojis from '@util/emojis';
+import emojis from '../../../util/emojis';
 
 export default {
     name: 'chat:questTierComplete',

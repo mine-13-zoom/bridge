@@ -1,11 +1,23 @@
 # Extensions
-#extensions/*
+extensions/fun-bot/
+extensions/gexp-stats/
+extensions/guild-invite-tracker/
+extensions/hypixel-stats/
+extensions/staff-management/
+extensions/urchin-blacklist/
+extensions/
 
 # Extension Scripts
 scripts/build-extensions.js
 
-# Extensions Building
+extensions/*/node_modules
+extensions/*/package-lock.json
+extensions/*/yarn.lock
 
+extensions-scripts/*
+
+# Extensions Building
+/extensions/*/dist
 
 
 # Logs
@@ -133,3 +145,10 @@ dist
 
 #MacOSX SHIT
 .DS_Store
+src/plugin-system/MINEFLAYER_EXTENSIONS.md
+extensions-scrips/build-extensions.sh
+.gitignore
+extensions-scrips/test-extensions.mjs
+data/guild-analytics.json
+extensions/fun-bot/config.example.json
+extensions/fun-bot/config.json

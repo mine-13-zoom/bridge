@@ -8,8 +8,8 @@ import path from 'path';
 import fs from 'fs/promises';
 import { consola } from 'consola';
 import { EventEmitter } from 'events';
-import recursiveWalkDir from '@util/recursive-walk-dir';
-import Bridge from '@bridge';
+import recursiveWalkDir from '../util/recursive-walk-dir';
+import Bridge from '../bridge';
 
 // Core interfaces for Mineflayer extensions
 interface ChatMessageContext {
@@ -209,7 +209,18 @@ export class MineflayerExtensionManager extends EventEmitter {
             .sort((a, b) => a.priority - b.priority);
 
         for (const pattern of patterns) {
-            const matches = messageContext.message.match(pattern.pattern);
+            // Determine what to match against based on pattern characteristics
+            // If pattern starts with "Guild >" or similar, it expects raw message format
+            // If pattern starts with "!" or similar command characters, it expects just the message content
+            const patternSource = pattern.pattern.source;
+            const shouldUseRaw = patternSource.startsWith('^Guild >') || 
+                               patternSource.startsWith('^Officer >') ||
+                               patternSource.includes('Guild >') ||
+                               patternSource.includes('Officer >');
+            
+            const textToMatch = shouldUseRaw ? messageContext.raw : messageContext.message;
+            const matches = textToMatch.match(pattern.pattern);
+            
             if (matches) {
                 try {
                     messageContext.matches = matches;
@@ -227,7 +238,8 @@ export class MineflayerExtensionManager extends EventEmitter {
      * Parse raw chat message into structured context
      */
     private parseChatMessage(rawMessage: string): ChatMessageContext | null {
-        const guildChatPattern = /^(Guild|Officer) > (?:\[.*?\])?\s*([A-Za-z0-9_-]{2,17})\s*(?:\[.*?\])?:\s*(.*)$/;
+        // Updated guild pattern to match the original regex that captures guild rank
+        const guildChatPattern = /^(Guild|Officer) > (\[.*?\])?\s*([A-Za-z0-9_-]{2,17}).*?(\[.{1,15}\])?: (.*)$/;
         const partyPattern = /^Party > (?:\[.*?\])?\s*([A-Za-z0-9_-]{2,17})\s*(?:\[.*?\])?:\s*(.*)$/;
         const privatePattern = /^From (?:\[.*?\])?\s*([A-Za-z0-9_-]{2,17})\s*(?:\[.*?\])?: (.*)$/;
 
@@ -235,9 +247,11 @@ export class MineflayerExtensionManager extends EventEmitter {
         
         if ((match = rawMessage.match(guildChatPattern))) {
             return {
-                message: match[3] || '',
-                username: match[2] || '',
+                message: match[5] || '',
+                username: match[3] || '',
                 channel: match[1] as 'Guild' | 'Officer',
+                rank: match[2] ? match[2].replace(/[\[\]]/g, '') : undefined, // Hypixel rank (remove brackets)
+                guildRank: match[4] ? match[4].replace(/[\[\]]/g, '') : undefined, // Guild rank (remove brackets)
                 timestamp: new Date(),
                 raw: rawMessage
             };

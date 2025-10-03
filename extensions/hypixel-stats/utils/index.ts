@@ -37,7 +37,9 @@ export async function fetchMojangProfile(username: string): Promise<MojangProfil
         
         if (response.status === 200) {
             const data: any = await response.json();
-            return { id: data.id, name: data.name };
+            // Remove dashes from UUID for consistency
+            const uuid = data.id.replace(/-/g, '');
+            return { id: uuid, name: data.name };
         }
         
         return {
@@ -144,4 +146,60 @@ export function getSkywarsLevelColor(level: number): string {
     if (level >= 10) return '[' + level + '✪]';
     if (level >= 5) return '[' + level + '✪]';
     return '[' + level + ']';
+}
+
+/**
+ * Fetch SkyBlock profiles for a player
+ */
+export async function fetchSkyblockProfiles(uuid: string, apiKey: string): Promise<any | FetchError> {
+    try {
+        const response = await fetch(`https://api.hypixel.net/v2/skyblock/profiles?key=${apiKey}&uuid=${uuid}`, {
+            headers: {
+                'User-Agent': 'MiscellaneousBridge/2.6 (info@vliegenier04.dev)',
+                Accept: 'application/json',
+            },
+        });
+
+        if (response.status === 200) {
+            const data: any = await response.json();
+            
+            if (data.success && data.profiles && data.profiles.length > 0) {
+                // Find the selected profile or use the most recently played one
+                let selectedProfile = data.profiles.find((p: any) => p.selected) || 
+                                   data.profiles.sort((a: any, b: any) => (b.last_save || 0) - (a.last_save || 0))[0];
+                
+                if (selectedProfile && selectedProfile.members && selectedProfile.members[uuid]) {
+                    return {
+                        profile: selectedProfile,
+                        memberData: selectedProfile.members[uuid],
+                        bankBalance: selectedProfile.banking?.balance || 0
+                    };
+                }
+            }
+            
+            // Handle the case where profiles is null or empty
+            if (data.success && (data.profiles === null || !data.profiles || data.profiles.length === 0)) {
+                return {
+                    status: 404,
+                    statusText: 'Player has not played SkyBlock or profiles are private'
+                };
+            }
+            
+            return {
+                status: 404,
+                statusText: 'No SkyBlock profiles found'
+            };
+        }
+
+        const errorText = await response.text();
+        return {
+            status: response.status,
+            statusText: response.statusText
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            statusText: 'Network error while fetching SkyBlock profiles'
+        };
+    }
 }

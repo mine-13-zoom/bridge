@@ -11,7 +11,7 @@ export const megaWallsHandler: StatsHandler = {
     description: 'Check Mega Walls stats',
     buildStatsMessage: (playerName: string, achievements?: Achievements, stats?: Walls3): string => {
         if (!stats) {
-            return `/gc No Mega Walls stats found for ${playerName}. | ${getRandomHexColor()}`;
+            return `No Mega Walls stats found for ${playerName}. | ${getRandomHexColor()}`;
         }
 
         const wins = stats.wins ?? 0;
@@ -28,6 +28,6 @@ export const megaWallsHandler: StatsHandler = {
         const wlr = calculateRatio(wins, losses);
         const fkdr = calculateRatio(finalKills, finalDeaths);
 
-        return `/gc [Mega Walls] IGN: ${playerName} | WINS: ${wins} | KDR: ${kdr} | FKDR: ${fkdr} | WLR: ${wlr} | FK: ${finalKills} | CLASS: ${chosenClass} | ${getRandomHexColor()}`;
+        return `[Mega Walls] IGN: ${playerName} | WINS: ${wins} | KDR: ${kdr} | FKDR: ${fkdr} | WLR: ${wlr} | FK: ${finalKills} | CLASS: ${chosenClass} | ${getRandomHexColor()}`;
     }
 };

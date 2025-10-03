@@ -1,10 +1,10 @@
-import emojis from '@util/emojis';
+import emojis from '../../../util/emojis';
 import { escapeMarkdown } from 'discord.js';
-import fetchMojangProfile from '@requests/fetch-mojang-profile';
-import isFetchError from '@requests/is-fetch-error';
-import isUserBlacklisted from '@blacklist/is-user-blacklisted';
-import getRankColor from '@util/get-rank-color';
-import env from '@util/env';
+import fetchMojangProfile from '../../../requests/fetch-mojang-profile';
+import isFetchError from '../../../requests/is-fetch-error';
+import isUserBlacklisted from '../../../blacklist/is-user-blacklisted';
+import getRankColor from '../../../util/get-rank-color';
+import env from '../../../util/env';
 
 export default {
     name: 'chat:memberJoinLeave',

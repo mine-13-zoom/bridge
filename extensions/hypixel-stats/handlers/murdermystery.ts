@@ -11,7 +11,7 @@ export const murderMysteryHandler: StatsHandler = {
     description: 'Check Murder Mystery stats',
     buildStatsMessage: (playerName: string, achievements?: Achievements, stats?: MurderMystery): string => {
         if (!stats) {
-            return `/gc No Murder Mystery stats found for ${playerName}. | ${getRandomHexColor()}`;
+            return `No Murder Mystery stats found for ${playerName}. | ${getRandomHexColor()}`;
         }
 
         const wins = stats.wins ?? 0;
@@ -28,6 +28,6 @@ export const murderMysteryHandler: StatsHandler = {
         const kdr = calculateRatio(kills, deaths);
         const winRate = calculateRatio(wins, games, 1);
 
-        return `/gc [Murder Mystery] IGN: ${playerName} | WINS: ${wins} | WR: ${winRate}% | KDR: ${kdr} | MURDERER: ${murdererWins} | DETECTIVE: ${detectiveWins} | CLASSIC: ${classicWins} | ${getRandomHexColor()}`;
+        return `[Murder Mystery] IGN: ${playerName} | WINS: ${wins} | WR: ${winRate}% | KDR: ${kdr} | MURDERER: ${murdererWins} | DETECTIVE: ${detectiveWins} | CLASSIC: ${classicWins} | ${getRandomHexColor()}`;
     }
 };

@@ -11,7 +11,7 @@ export const arcadeHandler: StatsHandler = {
     description: 'Check Arcade Games stats',
     buildStatsMessage: (playerName: string, achievements?: Achievements, stats?: Arcade): string => {
         if (!stats) {
-            return `/gc No Arcade Games stats found for ${playerName}. | ${getRandomHexColor()}`;
+            return `No Arcade Games stats found for ${playerName}. | ${getRandomHexColor()}`;
         }
 
         const wins = stats.wins ?? 0;
@@ -23,6 +23,6 @@ export const arcadeHandler: StatsHandler = {
         const miniWallsWins = stats.wins_mini_walls ?? 0;
         const farmHuntWins = stats.wins_farm_hunt ?? 0;
 
-        return `/gc [Arcade] IGN: ${playerName} | WINS: ${wins} | COINS: ${formatNumber(coins)} | PARTY: ${partyWins} | HITW: ${holeInTheWallWins} | GALAXY: ${galaxyWarsWins} | DRAGON: ${dragonWarsWins} | ${getRandomHexColor()}`;
+        return `[Arcade] IGN: ${playerName} | WINS: ${wins} | COINS: ${formatNumber(coins)} | PARTY: ${partyWins} | HITW: ${holeInTheWallWins} | GALAXY: ${galaxyWarsWins} | DRAGON: ${dragonWarsWins} | ${getRandomHexColor()}`;
     }
 };

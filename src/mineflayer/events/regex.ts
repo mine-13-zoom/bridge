@@ -5,7 +5,7 @@
  * Extensions can add additional patterns through the MineflayerExtensionManager.
  */
 
-import Bridge from '@bridge';
+import Bridge from '../../bridge';
 
 // Core regex patterns for Hypixel chat parsing
 const coreRegexPatterns = {

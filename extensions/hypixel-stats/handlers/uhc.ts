@@ -11,7 +11,7 @@ export const uhcHandler: StatsHandler = {
     description: 'Check UHC Champions stats',
     buildStatsMessage: (playerName: string, achievements?: Achievements, stats?: UHC): string => {
         if (!stats) {
-            return `/gc No UHC Champions stats found for ${playerName}. | ${getRandomHexColor()}`;
+            return `No UHC Champions stats found for ${playerName}. | ${getRandomHexColor()}`;
         }
 
         const wins = stats.wins ?? 0;
@@ -26,6 +26,6 @@ export const uhcHandler: StatsHandler = {
         // Calculate ratios
         const kdr = calculateRatio(kills, deaths);
 
-        return `/gc [UHC] IGN: ${playerName} | WINS: ${wins} (S:${soloWins} T:${teamWins}) | KDR: ${kdr} | KILLS: ${formatNumber(kills)} | SCORE: ${formatNumber(score)} | HEADS: ${headsEaten} | ${getRandomHexColor()}`;
+        return `[UHC] IGN: ${playerName} | WINS: ${wins} (S:${soloWins} T:${teamWins}) | KDR: ${kdr} | KILLS: ${formatNumber(kills)} | SCORE: ${formatNumber(score)} | HEADS: ${headsEaten} | ${getRandomHexColor()}`;
     }
 };

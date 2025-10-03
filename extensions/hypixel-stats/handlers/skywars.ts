@@ -11,7 +11,7 @@ export const skywarsHandler: StatsHandler = {
     description: 'Check SkyWars stats',
     buildStatsMessage: (playerName: string, achievements?: Achievements, stats?: SkyWars): string => {
         if (!achievements || !stats) {
-            return `/gc No SkyWars stats found for ${playerName}. | ${getRandomHexColor()}`;
+            return `No SkyWars stats found for ${playerName}. | ${getRandomHexColor()}`;
         }
 
         // Calculate level from experience (Hypixel uses a complex formula)
@@ -39,6 +39,6 @@ export const skywarsHandler: StatsHandler = {
 
         const levelDisplay = getSkywarsLevelColor(level);
 
-        return `/gc [SkyWars] IGN: ${playerName} | ${levelDisplay} | WINS: ${wins} | KDR: ${kdr} | KILLS: ${formatNumber(kills)} | WLR: ${wlr} | SOULS: ${formatNumber(souls)} | ${getRandomHexColor()}`;
+        return `[SkyWars] IGN: ${playerName} | ${levelDisplay} | WINS: ${wins} | KDR: ${kdr} | KILLS: ${formatNumber(kills)} | WLR: ${wlr} | SOULS: ${formatNumber(souls)} | ${getRandomHexColor()}`;
     }
 };

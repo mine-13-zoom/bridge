@@ -95,31 +95,31 @@ export default class GuildInviteTracker {
      */
     getChatPatterns(): ChatPattern[] {
         return [
-            // Pattern 1: Direct guild join message detection
+            // Pattern 1: Direct guild join message detection (supports optional ranks)
             {
                 id: 'guild-join-direct',
                 extensionId: 'guild-invite-tracker',
-                pattern: /^\[.+\]\s+(.+)\s+joined the guild!$/,
+                pattern: /^\[.+\]\s+(?:\[[^\]]+\]\s+)?(.+?)\s+joined the guild!$/,
                 priority: 0,
-                description: 'Detects direct guild join messages',
+                description: 'Detects direct guild join messages with optional rank support',
                 handler: this.handleDirectGuildJoin.bind(this)
             },
-            // Pattern 2: Guild leave message detection
+            // Pattern 2: Guild leave message detection (supports optional ranks)
             {
                 id: 'guild-leave-direct',
                 extensionId: 'guild-invite-tracker',
-                pattern: /^\[.+\]\s+(.+)\s+left the guild!$/,
+                pattern: /^\[.+\]\s+(?:\[[^\]]+\]\s+)?(.+?)\s+left the guild!$/,
                 priority: 0,
-                description: 'Detects direct guild leave messages',
+                description: 'Detects direct guild leave messages with optional rank support',
                 handler: this.handleDirectGuildLeave.bind(this)
             },
-            // Pattern 3: Guild kick message detection
+            // Pattern 3: Guild kick message detection (supports optional ranks)
             {
                 id: 'guild-kick-direct',
                 extensionId: 'guild-invite-tracker',
-                pattern: /^\[.+\]\s+(.+)\s+was kicked from the guild by\s+(.+)!$/,
+                pattern: /^\[.+\]\s+(?:\[[^\]]+\]\s+)?(.+?)\s+was kicked from the guild by\s+(?:\[[^\]]+\]\s+)?(.+?)!$/,
                 priority: 0,
-                description: 'Detects guild kick messages',
+                description: 'Detects guild kick messages with optional rank support',
                 handler: this.handleDirectGuildKick.bind(this)
             },
             // Pattern 4: Guild log response detection  
@@ -363,12 +363,11 @@ export default class GuildInviteTracker {
         try {
             const message = `Player **${username}** joined the guild without an invite.`;
             
-            const bridge = this.botContext?.bridge;
-            if (bridge?.discord?.send) {
-                await bridge.discord.send(this.config.discordChannel, message);
+            if (api.discord?.send) {
+                await api.discord.send(this.config.discordChannel, message);
                 api.log.success(`✅ Sent no-invite notification: ${username} joined without invite`);
             } else {
-                api.log.error('❌ Discord bridge not available');
+                api.log.error('❌ Discord API not available');
             }
         } catch (error) {
             api.log.error('Error sending Discord notification:', error);
@@ -387,7 +386,7 @@ export default class GuildInviteTracker {
                 await bridge.discord.send(this.config.discordChannel, message);
                 api.log.success(`✅ Sent leave notification: ${username} left the guild`);
             } else {
-                api.log.error('❌ Discord bridge not available');
+                api.log.error('❌ Discord API not available');
             }
         } catch (error) {
             api.log.error('Error sending Discord notification:', error);
@@ -406,7 +405,7 @@ export default class GuildInviteTracker {
                 await bridge.discord.send(this.config.discordChannel, message);
                 api.log.success(`✅ Sent kick notification: ${kickedUser} kicked by ${kickerUser}`);
             } else {
-                api.log.error('❌ Discord bridge not available');
+                api.log.error('❌ Discord API not available');
             }
         } catch (error) {
             api.log.error('Error sending Discord notification:', error);

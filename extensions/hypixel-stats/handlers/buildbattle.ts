@@ -11,7 +11,7 @@ export const buildBattleHandler: StatsHandler = {
     description: 'Check Build Battle stats',
     buildStatsMessage: (playerName: string, achievements?: Achievements, stats?: BuildBattle): string => {
         if (!stats) {
-            return `/gc No Build Battle stats found for ${playerName}. | ${getRandomHexColor()}`;
+            return `No Build Battle stats found for ${playerName}. | ${getRandomHexColor()}`;
         }
 
         const wins = stats.wins ?? 0;
@@ -26,6 +26,6 @@ export const buildBattleHandler: StatsHandler = {
         // Calculate win rate
         const winRate = calculateRatio(wins, gamesPlayed, 1);
 
-        return `/gc [Build Battle] IGN: ${playerName} | WINS: ${wins} | SCORE: ${formatNumber(score)} | WR: ${winRate}% | SOLO: ${soloWins} | TEAMS: ${teamWins} | GTB: ${gtbWins} | PRO: ${proWins} | ${getRandomHexColor()}`;
+        return `[Build Battle] IGN: ${playerName} | WINS: ${wins} | SCORE: ${formatNumber(score)} | WR: ${winRate}% | SOLO: ${soloWins} | TEAMS: ${teamWins} | GTB: ${gtbWins} | PRO: ${proWins} | ${getRandomHexColor()}`;
     }
 };

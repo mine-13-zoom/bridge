@@ -8,6 +8,14 @@
  * 
  * Command: !gexp [username]
  * 
+ * Configuration Options:
+ * - enabled: Enable/disable the extension (default: true)
+ * - guildRankCooldowns: Guild rank-based cooldown mappings in seconds
+ *   - Guild Master: 0s (no cooldown)
+ *   - Leader: 10s
+ *   - Moderator: 20s
+ *   - Member: 60s
+ * 
  * @author MiscGuild Bridge Bot Team
  * @version 1.0.0
  */
@@ -154,7 +162,15 @@ class GEXPStatsExtension {
     private defaultConfig = {
         enabled: true,
         hypixelApiKey: process.env.HYPIXEL_API_KEY || '',
-        cleanupInterval: 5 * 60 * 1000 // Clean up old cooldowns every 5 minutes
+        cleanupInterval: 5 * 60 * 1000, // Clean up old cooldowns every 5 minutes
+        guildRankCooldowns: {
+            'GM': 0,      // No cooldown for Guild Master
+            'Leader': 10,          // 10 seconds for Leaders
+            'SBMAIN': 12,          // 12 seconds for SBMAIN
+            'Elite': 15,           // 15 seconds for Elites
+            'Mod': 20,       // 20 seconds for Moderators  
+            'Member': 60           // 60 seconds for Members
+        }
     };
 
     /**
@@ -189,7 +205,7 @@ class GEXPStatsExtension {
         return [{
             id: 'gexp-stats',
             extensionId: 'gexp-stats',
-            pattern: /^!gexp(?:\s+(.+))?$/i,
+            pattern: /^!gexp(?:\s+(\S+))?(?:\s+.*)?$/i,
             priority: 1,
             description: 'Check GEXP statistics for a player',
             handler: this.handleGEXPCommand.bind(this)
@@ -343,6 +359,8 @@ class GEXPStatsExtension {
         return num.toString();
     }
 
+
+
     /**
      * Handle fetch errors
      */
@@ -362,24 +380,47 @@ class GEXPStatsExtension {
     }
 
     /**
-     * Check if user is on cooldown
+     * Check if user is on cooldown based on guild rank
      */
     private isOnCooldown(
         playerName: string,
         guildRank: string | undefined,
         now: number
     ): number | null {
-        let cooldownTime: number | undefined;
+        // Get guild rank cooldowns configuration
+        const rankCooldowns = this.config.guildRankCooldowns || this.defaultConfig.guildRankCooldowns;
+        let cooldownSeconds: number | undefined;
 
-        if (guildRank?.includes('Member')) {
-            cooldownTime = 1 * 60 * 1000; // 1 minute for members
+        // Check for exact guild rank match first
+        if (guildRank && rankCooldowns[guildRank]) {
+            cooldownSeconds = rankCooldowns[guildRank];
+        } else if (guildRank) {
+            // Try to match guild rank keywords (case-insensitive)
+            if (guildRank.toLowerCase().includes('guild master') || guildRank.toLowerCase().includes('guildmaster')) {
+                cooldownSeconds = rankCooldowns['Guild Master'];
+            } else if (guildRank.toLowerCase().includes('leader')) {
+                cooldownSeconds = rankCooldowns['Leader'];
+            } else if (guildRank.toLowerCase().includes('moderator') || guildRank.toLowerCase().includes('mod')) {
+                cooldownSeconds = rankCooldowns['Moderator'];
+            } else if (guildRank.toLowerCase().includes('member')) {
+                cooldownSeconds = rankCooldowns['Member'];
+            }
         }
 
-        if (cooldownTime) {
-            const lastRun = this.cooldowns.get(playerName);
-            if (lastRun && now - lastRun < cooldownTime) {
-                return Math.ceil((cooldownTime - (now - lastRun)) / 1000);
-            }
+        // Default to Member cooldown if no rank detected
+        if (cooldownSeconds === undefined) {
+            cooldownSeconds = rankCooldowns['Member'];
+        }
+
+        // No cooldown if set to 0
+        if (cooldownSeconds === 0) {
+            return null;
+        }
+
+        const cooldownTime = cooldownSeconds! * 1000; // Convert to milliseconds
+        const lastRun = this.cooldowns.get(playerName);
+        if (lastRun && now - lastRun < cooldownTime) {
+            return Math.ceil((cooldownTime - (now - lastRun)) / 1000);
         }
 
         return null;

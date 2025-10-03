@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder, GuildMember, Interaction } from 'discord.js';
 import consola from 'consola';
-import env from '@util/env';
+import env from '../../util/env';
 
 export default {
     name: 'interactionCreate',

@@ -3,9 +3,9 @@
 import { createBot, Bot } from 'mineflayer';
 import { consola } from 'consola';
 import path from 'path';
-import env from '@util/env';
-import loadEvents from '@util/load-events';
-import Bridge from '@bridge';
+import env from '../util/env';
+import loadEvents from '../util/load-events';
+import Bridge from '../bridge';
 
 export default class Mineflayer {
     public bot!: Bot;
@@ -114,20 +114,12 @@ export default class Mineflayer {
         const chatPatterns = bridge.extensionManager.getAllChatPatterns();
         
         consola.info(`Registering ${chatPatterns.length} extension chat patterns`);
-
-        // Add a general message listener that routes to extension patterns
-        this.bot.on('message', async (jsonMsg: any, position: string) => {
-            try {
-                // Convert message to string
-                const messageStr = typeof jsonMsg === 'string' ? jsonMsg : (jsonMsg?.toString ? jsonMsg.toString() : '');
-                
-                // Process the message through the extension manager
-                await bridge.extensionManager.processChatMessage(messageStr);
-                
-            } catch (error) {
-                consola.error('Error processing message through extensions:', error);
-            }
-        });
+        
+        // Note: The Extension Manager already has its own central chat listener
+        // in setupCentralChatListener(), so we don't need to add another one here
+        // to avoid duplicate message processing.
+        
+        consola.debug('Extension Manager is handling chat message routing');
     }
 
     private isCorePattern(eventName: string): boolean {

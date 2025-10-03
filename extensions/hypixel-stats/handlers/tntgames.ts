@@ -11,7 +11,7 @@ export const tntGamesHandler: StatsHandler = {
     description: 'Check TNT Games stats',
     buildStatsMessage: (playerName: string, achievements?: Achievements, stats?: TNTGames): string => {
         if (!stats) {
-            return `/gc No TNT Games stats found for ${playerName}. | ${getRandomHexColor()}`;
+            return `No TNT Games stats found for ${playerName}. | ${getRandomHexColor()}`;
         }
 
         const wins = stats.wins ?? 0;
@@ -22,6 +22,6 @@ export const tntGamesHandler: StatsHandler = {
         const captureWins = stats.wins_capture ?? 0;
         const record = stats.record_tntrun ?? 0;
 
-        return `/gc [TNT Games] IGN: ${playerName} | WINS: ${wins} | TNT RUN: ${tntrunWins} | PVP RUN: ${pvprunWins} | BOW SPLEEF: ${bowspleefWins} | TNT TAG: ${tntagWins} | RECORD: ${record}s | ${getRandomHexColor()}`;
+        return `[TNT Games] IGN: ${playerName} | WINS: ${wins} | TNT RUN: ${tntrunWins} | PVP RUN: ${pvprunWins} | BOW SPLEEF: ${bowspleefWins} | TNT TAG: ${tntagWins} | RECORD: ${record}s | ${getRandomHexColor()}`;
     }
 };

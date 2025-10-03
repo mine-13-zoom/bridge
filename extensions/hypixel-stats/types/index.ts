@@ -259,6 +259,210 @@ export interface Arcade {
     wins_party_3?: number;
 }
 
+export interface SkyBlock {
+    // Player Profile Info
+    profiles?: { [profileName: string]: any };
+    
+    // Experience and levels
+    experience?: number;
+    
+    // SkyBlock skills
+    skill_farming?: number;
+    skill_mining?: number;
+    skill_combat?: number;
+    skill_foraging?: number;
+    skill_fishing?: number;
+    skill_enchanting?: number;
+    skill_alchemy?: number;
+    skill_carpentry?: number;
+    skill_runecrafting?: number;
+    skill_social?: number;
+    skill_taming?: number;
+    
+    // Collections
+    collection_wheat?: number;
+    collection_carrot?: number;
+    collection_potato?: number;
+    collection_pumpkin?: number;
+    collection_melon?: number;
+    collection_mushroom?: number;
+    collection_cocoa?: number;
+    collection_cactus?: number;
+    collection_sugar_cane?: number;
+    collection_nether_wart?: number;
+    
+    // Mining collections
+    collection_cobblestone?: number;
+    collection_iron_ingot?: number;
+    collection_gold_ingot?: number;
+    collection_diamond?: number;
+    collection_lapis_lazuli?: number;
+    collection_emerald?: number;
+    collection_redstone?: number;
+    collection_coal?: number;
+    collection_obsidian?: number;
+    collection_glowstone_dust?: number;
+    collection_quartz?: number;
+    collection_ender_stone?: number;
+    
+    // Combat collections
+    collection_rotten_flesh?: number;
+    collection_bone?: number;
+    collection_string?: number;
+    collection_spider_eye?: number;
+    collection_gunpowder?: number;
+    collection_ender_pearl?: number;
+    collection_blaze_rod?: number;
+    collection_magma_cream?: number;
+    collection_ghast_tear?: number;
+    collection_slime_ball?: number;
+    
+    // Foraging collections
+    collection_log?: number;
+    collection_log_2?: number;
+    collection_log_jungle?: number;
+    collection_log_spruce?: number;
+    collection_log_birch?: number;
+    collection_log_acacia?: number;
+    collection_log_dark_oak?: number;
+    
+    // Fishing collections
+    collection_raw_fish?: number;
+    collection_raw_salmon?: number;
+    collection_clownfish?: number;
+    collection_pufferfish?: number;
+    collection_prismarine_shard?: number;
+    collection_prismarine_crystals?: number;
+    collection_clay_ball?: number;
+    collection_water_lily?: number;
+    collection_ink_sack?: number;
+    collection_sponge?: number;
+    
+    // Pet info
+    pets?: Array<{
+        uuid?: string;
+        type?: string;
+        exp?: number;
+        tier?: string;
+        heldItem?: string;
+        candyUsed?: number;
+        skin?: string;
+    }>;
+    
+    // Dungeon stats
+    dungeons?: {
+        dungeon_types?: {
+            catacombs?: {
+                times_played?: { [floor: string]: number };
+                tier_completions?: { [floor: string]: number };
+                fastest_time?: { [floor: string]: number };
+                best_runs?: { [floor: string]: any };
+                experience?: number;
+                mobs_killed?: number;
+                most_damage?: { [className: string]: number };
+                milestone_completions?: { [milestone: string]: number };
+            };
+        };
+        selected_dungeon_class?: string;
+        player_classes?: {
+            healer?: { experience?: number };
+            mage?: { experience?: number };
+            berserk?: { experience?: number };
+            archer?: { experience?: number };
+            tank?: { experience?: number };
+        };
+    };
+    
+    // Slayer stats
+    slayer_bosses?: {
+        zombie?: {
+            claimed_levels?: { [tier: string]: boolean };
+            xp?: number;
+            kills_tier_0?: number;
+            kills_tier_1?: number;
+            kills_tier_2?: number;
+            kills_tier_3?: number;
+            kills_tier_4?: number;
+        };
+        spider?: {
+            claimed_levels?: { [tier: string]: boolean };
+            xp?: number;
+            kills_tier_0?: number;
+            kills_tier_1?: number;
+            kills_tier_2?: number;
+            kills_tier_3?: number;
+            kills_tier_4?: number;
+        };
+        wolf?: {
+            claimed_levels?: { [tier: string]: boolean };
+            xp?: number;
+            kills_tier_0?: number;
+            kills_tier_1?: number;
+            kills_tier_2?: number;
+            kills_tier_3?: number;
+            kills_tier_4?: number;
+        };
+        enderman?: {
+            claimed_levels?: { [tier: string]: boolean };
+            xp?: number;
+            kills_tier_0?: number;
+            kills_tier_1?: number;
+            kills_tier_2?: number;
+            kills_tier_3?: number;
+            kills_tier_4?: number;
+        };
+        blaze?: {
+            claimed_levels?: { [tier: string]: boolean };
+            xp?: number;
+            kills_tier_0?: number;
+            kills_tier_1?: number;
+            kills_tier_2?: number;
+            kills_tier_3?: number;
+            kills_tier_4?: number;
+        };
+        vampire?: {
+            claimed_levels?: { [tier: string]: boolean };
+            xp?: number;
+            kills_tier_0?: number;
+            kills_tier_1?: number;
+            kills_tier_2?: number;
+            kills_tier_3?: number;
+            kills_tier_4?: number;
+        };
+    };
+    
+    // Bank and purse
+    coin_purse?: number;
+    
+    // Misc stats
+    deaths?: number;
+    kills?: number;
+    items_fished?: number;
+    items_fished_treasure?: number;
+    items_fished_large_treasure?: number;
+    auctions_bids?: number;
+    auctions_highest_bid?: number;
+    auctions_won?: number;
+    auctions_created?: number;
+    auctions_fees?: number;
+    auctions_completed?: number;
+    
+    // Jacob's farming
+    jacobs_contest?: {
+        medals_inv?: {
+            gold?: number;
+            silver?: number;
+            bronze?: number;
+        };
+        perks?: {
+            double_drops?: number;
+            farming_level_cap?: number;
+            personal_bests?: boolean;
+        };
+        contests?: { [contest: string]: any };
+    };
+}
+
 export interface HypixelPlayerResponse {
     id: string;
     achievements?: Achievements;
@@ -272,6 +476,7 @@ export interface HypixelPlayerResponse {
         TNTGames?: TNTGames;
         Walls3?: Walls3;
         Arcade?: Arcade;
+        SkyBlock?: SkyBlock;
         [key: string]: any;
     };
     displayname: string;
@@ -281,5 +486,5 @@ export interface StatsHandler {
     gameMode: string;
     command: string;
     description: string;
-    buildStatsMessage: (playerName: string, achievements?: Achievements, stats?: any) => string;
+    buildStatsMessage: (playerName: string, achievements?: Achievements, stats?: any, api?: any) => string | Promise<string>;
 }
