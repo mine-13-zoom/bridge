@@ -1,0 +1,10 @@
+{
+  "enabled": true,
+  "debugMode": false,
+  "guildRankCooldowns": {
+    "Guild Master": 0,
+    "Leader": 15,
+    "Moderator": 30,
+    "Member": 60
+  }
+}

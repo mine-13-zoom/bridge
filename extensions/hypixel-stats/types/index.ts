@@ -239,7 +239,8 @@ export interface Walls3 {
 // Arcade stats interface
 export interface Arcade {
     coins?: number;
-    wins?: number;
+    // Note: There is no general 'wins' field in the API response
+    // Total wins should be calculated by summing specific wins fields
     wins_party?: number;
     wins_hole_in_the_wall?: number;
     wins_galaxy_wars?: number;
@@ -255,8 +256,22 @@ export interface Arcade {
     wins_scuba_simulator?: number;
     wins_halloween_simulator?: number;
     wins_grinch_simulator?: number;
+    wins_grinch_simulator_v2?: number;
     wins_party_2?: number;
     wins_party_3?: number;
+    wins_ender?: number;
+    wins_soccer?: number;
+    wins_zombies?: number;
+    wins_zombies_deadend?: number;
+    wins_zombies_deadend_normal?: number;
+    wins_zombies_prison?: number;
+    wins_zombies_prison_normal?: number;
+    wins_oneinthequiver?: number;
+    pixel_party?: {
+        wins?: number;
+        wins_normal?: number;
+        wins_hyper?: number;
+    };
 }
 
 export interface SkyBlock {

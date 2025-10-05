@@ -71,9 +71,10 @@ class HypixelStatsExtension {
         cacheCleanupInterval: 5 * 60 * 1000, // Clean up expired cache entries every 5 minutes
         guildRankCooldowns: {
             'Guild Master': 0,      // No cooldown for Guild Master
-            'Leader': 15,          // 15 seconds for Leaders
-            'Moderator': 30,       // 30 seconds for Moderators  
-            'Member': 60           // 60 seconds for Members
+            'Leader': 0,          // 0 seconds for Leaders
+            'Moderator': 0,       // 0 seconds for Moderators
+            'Elite': 30,          // 30 seconds for Elites
+            'Member': 45           // 45 seconds for Members
         }
     };
 
