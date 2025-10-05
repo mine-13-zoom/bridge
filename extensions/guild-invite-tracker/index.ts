@@ -308,7 +308,7 @@ export default class GuildInviteTracker {
                 if (entry.includes(targetUsername) && entry.includes('invited')) {
                     // Enhanced regex patterns to extract inviter name
                     const patterns = [
-                        new RegExp(`(\\w+)\\s+invited\\s+${targetUsername}`),           // "Richy135 invited _7RC"
+                        new RegExp(`(\\w+)\\s+invited\\s+${targetUsername}`),           // "Richy135 invited Vliegnier04"
                         new RegExp(`(\\w+)\\s+invited\\s+${targetUsername}\\s*$`),     // With optional end
                         /(\w+)\s+invited\s+\w+$/,                                      // Standard format fallback
                         /EDT:\s*(\w+)\s+invited/,                                      // With timezone
@@ -363,11 +363,12 @@ export default class GuildInviteTracker {
         try {
             const message = `Player **${username}** joined the guild without an invite.`;
             
-            if (api.discord?.send) {
-                await api.discord.send(this.config.discordChannel, message);
+            const bridge = this.botContext?.bridge;
+            if (bridge?.discord?.send) {
+                await bridge.discord.send(this.config.discordChannel, message);
                 api.log.success(`✅ Sent no-invite notification: ${username} joined without invite`);
             } else {
-                api.log.error('❌ Discord API not available');
+                api.log.error('❌ Discord bridge not available');
             }
         } catch (error) {
             api.log.error('Error sending Discord notification:', error);
@@ -386,7 +387,7 @@ export default class GuildInviteTracker {
                 await bridge.discord.send(this.config.discordChannel, message);
                 api.log.success(`✅ Sent leave notification: ${username} left the guild`);
             } else {
-                api.log.error('❌ Discord API not available');
+                api.log.error('❌ Discord bridge not available');
             }
         } catch (error) {
             api.log.error('Error sending Discord notification:', error);
@@ -405,7 +406,7 @@ export default class GuildInviteTracker {
                 await bridge.discord.send(this.config.discordChannel, message);
                 api.log.success(`✅ Sent kick notification: ${kickedUser} kicked by ${kickerUser}`);
             } else {
-                api.log.error('❌ Discord API not available');
+                api.log.error('❌ Discord bridge not available');
             }
         } catch (error) {
             api.log.error('Error sending Discord notification:', error);

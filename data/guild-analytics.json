@@ -494,7 +494,7 @@
     },
     "2025-10-05": {
       "date": "2025-10-05",
-      "messagesReceived": 150,
+      "messagesReceived": 158,
       "membersJoined": 0,
       "membersLeft": 0,
       "membersKicked": 0,
@@ -526,11 +526,12 @@
         "Marinodelfino",
         "Oh_Young_Il",
         "omar000000",
-        "mtkcraft"
+        "mtkcraft",
+        "Legrys"
       ],
       "topChatters": {
-        "MiscManager": 29,
-        "Sqquiddy": 10,
+        "MiscManager": 33,
+        "Sqquiddy": 11,
         "Blocky_105": 10,
         "Vallons": 1,
         "catderek": 7,
@@ -538,7 +539,7 @@
         "Zaedo9490": 2,
         "MeIsProMeow": 3,
         "COUNTINCASH": 1,
-        "Gurmehar328": 5,
+        "Gurmehar328": 6,
         "SusuLarsen": 23,
         "blueberryallen": 12,
         "Vliegenier04": 6,
@@ -546,19 +547,20 @@
         "Cyless": 1,
         "ars0nistic": 2,
         "MyTearsMadeASea": 1,
-        "Dzielnica": 5,
+        "Dzielnica": 6,
         "Fixating": 4,
         "PanzerClone": 4,
         "Marinodelfino": 8,
         "Oh_Young_Il": 7,
         "omar000000": 3,
-        "mtkcraft": 1
+        "mtkcraft": 1,
+        "Legrys": 1
       }
     }
   },
   "lastReportDate": "2025-09-27",
   "totalStats": {
-    "totalMessages": 4055,
+    "totalMessages": 4063,
     "totalJoins": 7,
     "totalLeaves": 0,
     "totalKicks": 2,
