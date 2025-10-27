@@ -24,6 +24,10 @@ export default class Mineflayer {
     public limboAttempts = 0;
     private bot = Mineflayer.createBot();
 
+    public get botInstance() {
+        return this.bot;
+    }
+
     public reconnectOrExit(bridge: Bridge) {
         if (this.reconnecting) {
             winston.error('Exiting due to failed reconnect attempt');
@@ -41,7 +45,7 @@ export default class Mineflayer {
             winston.info(
                 `Sending to Limbo. Attempting disconnect.spam in ${triesBeforeSpam} ${
                     LIMBO_SPAM_THRESHOLD - this.limboAttempts === 1 ? 'try' : 'tries'
-                }`
+                }`,
             );
 
             this.execute('§');
